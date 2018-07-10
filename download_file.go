@@ -16,6 +16,7 @@ func downloadFile(
 	locale string,
 	path string,
 	retrievalType smartling.RetrievalType,
+	includeOriginalStrings bool,
 ) error {
 	var (
 		reader io.Reader
@@ -36,6 +37,7 @@ func downloadFile(
 		request := smartling.FileDownloadRequest{}
 		request.FileURI = file.FileURI
 		request.Type = retrievalType
+		request.includeOriginal = includeOriginalStrings
 
 		reader, err = client.DownloadTranslation(project, locale, request)
 		if err != nil {

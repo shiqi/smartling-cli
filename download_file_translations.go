@@ -22,9 +22,10 @@ func downloadFileTranslations(
 		source    = args["--source"].(bool)
 		locales   = args["--locale"].([]string)
 
-		format, formatGiven = args["--format"].(string)
-		progress, _         = args["--progress"].(string)
-		retrieve, _         = args["--retrieve"].(string)
+		format, formatGiven     = args["--format"].(string)
+		progress, _             = args["--progress"].(string)
+		retrieve, _             = args["--retrieve"].(string)
+		//includeOriginalStrings  = args["--includeOriginalStrings"].(bool)
 	)
 
 	progress = strings.TrimSuffix(progress, "%")
@@ -65,6 +66,14 @@ func downloadFileTranslations(
 	} else {
 		translations = status.Items
 	}
+
+	var includeOriginalStr bool
+
+	//if includeOriginalStrings {
+	//	includeOriginalStr = true
+	//}else{
+	includeOriginalStr = false
+	//}
 
 	for _, locale := range translations {
 		var complete int64
@@ -119,6 +128,7 @@ func downloadFileTranslations(
 			locale.LocaleID,
 			path,
 			retrievalType,
+			includeOriginalStr,
 		)
 		if err != nil {
 			return err
